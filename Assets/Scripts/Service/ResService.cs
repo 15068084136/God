@@ -15,6 +15,7 @@ public class ResService : MonoBehaviour
 
     public void InitService(){
         instance = this;
+        InitItemCfg(Constants.ItemCfgPath);
         InitRandomNameCfg(Constants.RandomNameCfgPath);
         InitMonsterCfg(Constants.monsterCfgPath);
         InitMapCfg(Constants.MapCfgPath);
@@ -126,6 +127,7 @@ public class ResService : MonoBehaviour
     private List<string> manList = new List<string>();
     private List<string> womanList = new List<string>();
 
+    #region 名字Cfg
     // 加载名字配置文件
     private void InitRandomNameCfg(string path){
         TextAsset xml = Resources.Load<TextAsset>(path);
@@ -186,6 +188,7 @@ public class ResService : MonoBehaviour
 
         return randomName;
     }
+    #endregion
 
     #region 地图
     // 加载地图配置文件
@@ -873,6 +876,85 @@ public class ResService : MonoBehaviour
         TaskCfg taskCfg = null;
         if(taskRewardDic.TryGetValue(id, out taskCfg)){
             return taskCfg;
+        }
+        return null;
+    }
+    #endregion
+
+    #region ItemCfg
+
+    /// <summary>
+    ///  物品信息的列表（集合）
+    /// </summary>
+    public List<Item> itemList;
+
+    /// <summary>
+    /// 解析物品信息
+    /// </summary>
+    void InitItemCfg(string path)
+    {
+        itemList = new List<Item>();
+        //文本为在Unity里面是 TextAsset类型
+        TextAsset itemText = Resources.Load<TextAsset>(path);
+        string itemsJson = itemText.text;//物品信息的Json格式
+        JSONObject j = new JSONObject(itemsJson);
+        foreach (JSONObject temp in j.list)
+        {
+            string typeStr = temp["type"].str;
+            // 第一个参数指的是要转换成的枚举类型，第二个是要转换成枚举类型的文本
+            Item.ItemType type= (Item.ItemType)System.Enum.Parse(typeof(Item.ItemType), typeStr);
+
+            //下面的事解析这个对象里面的公有属性
+            int id = (int)(temp["id"].n);
+            string name = temp["name"].str;
+            Item.ItemQuality quality = (Item.ItemQuality)System.Enum.Parse(typeof(Item.ItemQuality), temp["quality"].str);
+            string description = temp["description"].str;
+            int capacity = (int)(temp["capacity"].n);
+            int buyPrice = (int)(temp["buyPrice"].n);
+            int sellPrice = (int)(temp["sellPrice"].n);
+            string sprite = temp["sprite"].str;
+
+            Item item = null; 
+            switch (type)
+            {
+                case Item.ItemType.Consumable:
+                    int hp = (int)(temp["hp"].n);
+                    int mp = (int)(temp["mp"].n);
+                    item = new Consumable(id, name, type, quality, description, capacity, buyPrice, sellPrice, sprite, hp, mp);
+                    break;
+                case Item.ItemType.Equipment:
+                    //
+                    int strength = (int)temp["strength"].n;
+                    int intellect = (int)temp["intellect"].n;
+                    int agility = (int)temp["agility"].n;
+                    int stamina = (int)temp["stamina"].n;
+                    Equipment.EquipmentType equipType = (Equipment.EquipmentType) System.Enum.Parse( typeof(Equipment.EquipmentType),temp["equipType"].str );
+                    item = new Equipment(id, name, type, quality, description, capacity, buyPrice, sellPrice, sprite, strength, intellect, agility, stamina, equipType);
+                    break;
+                case Item.ItemType.Weapon:
+                    //
+                    int damage = (int) temp["damage"].n;
+                    Weapon.WeaponType wpType = (Weapon.WeaponType)System.Enum.Parse(typeof(Weapon.WeaponType), temp["weaponType"].str);
+                    item = new Weapon(id, name, type, quality, description, capacity, buyPrice, sellPrice, sprite, damage, wpType);
+                    break;
+                case Item.ItemType.Material:
+                    //
+                    item = new Material(id, name, type, quality, description, capacity, buyPrice, sellPrice, sprite);
+                    break;
+            }
+            itemList.Add(item);
+        }
+    }
+
+    // 根据ID获得物品
+    public Item GetItemById(int id)
+    {
+        foreach (Item item in itemList)
+        {
+            if (item.ID == id)
+            {
+                return item;
+            }
         }
         return null;
     }

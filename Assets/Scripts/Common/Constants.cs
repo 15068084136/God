@@ -70,8 +70,8 @@ public class Constants : MonoBehaviour
 
     #region 音乐与音效
     // 音效名称
-    public const string LoginBGM = "bgLogin";
-    public const string MainCityBGM = "bgMainCity";
+    public const string LoginBGM = "02";
+    public const string MainCityBGM = "01";
     public const string HuangYeBGM = "bgHuangYe";
     public const string UIOpenPage = "uiOpenPage";
 
@@ -123,6 +123,15 @@ public class Constants : MonoBehaviour
     public const string TaskItemPrefeb = "Prefeb/TaskBg";
     #endregion
 
+    #region RankWin
+    public const string rankItemPrefeb = "Prefeb/RankBg";
+    #endregion
+
+    #region LoadImage
+    public const string loadMainCityImage = "LoadImage/LoadMainCity";
+    public const string loadFuBenImage = "LoadImage/LoadFuBen";
+    #endregion
+
     #region 玩家或者Monster
     public const string playerPrefebPath = "PrefabPlayer/AssassinCity";
     public const string BattleplayerPrefebPath = "PrefabPlayer/AssassinBattle";
@@ -148,6 +157,7 @@ public class Constants : MonoBehaviour
     public const string skillMoveCfgPath = "ResCfgs/skillmove";
     public const string monsterCfgPath = "ResCfgs/monster";
     public const string skillActionCfgPath = "ResCfgs/skillaction";
+    public const string ItemCfgPath = "ResCfgs/Items";
     #endregion
 
     #region 任务图标

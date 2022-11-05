@@ -20,6 +20,7 @@ public class MainCitySys : SystemRoot
     public StrongWin strongWin;
     public GuideWin guideWin;
     public InfoWin infoWin;
+    public RankWin rankWin;
     #endregion
     public Transform charCamTrans;
     PlayerController playerController;
@@ -110,6 +111,21 @@ public class MainCitySys : SystemRoot
         // 打开副本界面时，停下寻路
         StopNavTask();
         FuBenSys.instance.EnterFuBen();
+    }
+    #endregion
+
+    #region EnterInventorySys
+    // 中转
+    public void OpenKnapsackWin(){
+        InventorySys.instance.OpenKnapsackWin();
+    }
+    // 中转
+    public void OpenChestWin(){
+        InventorySys.instance.OpenChestWin();
+    }
+    // 中转
+    public void OpenVendorWin(){
+        InventorySys.instance.OpenVendorWin();
     }
     #endregion
 
@@ -319,6 +335,22 @@ public class MainCitySys : SystemRoot
         GameRoot.instance.SetPlayerDataByGuide(data);
         // 更新主城UI界面数据
         mainCityWin.RefreshUI();
+    }
+    #endregion
+
+    #region RankWin
+    public void SendRank(){
+        GameMsg msg = new GameMsg{
+            cmd = (int)Command.reqRank
+        };
+        netService.SendMsg(msg);
+    }
+    public void OpenRankWin(){
+        SendRank();
+    }
+    public void RspRank(GameMsg msg){
+        rankWin.rankDataList = msg.rspRank.rankDataList;
+        rankWin.SetWinState();
     }
     #endregion
 }

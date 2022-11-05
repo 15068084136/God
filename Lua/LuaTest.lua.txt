@@ -11,12 +11,18 @@ xlua.hotfix(CS.GongGaoWin, 'RefreshUI', function(self)
         self.notice2 = "1--增加了公告UI界面"
         self.notice3 = "2--采用Xlua对公告界面进行开发"
         self.notice4 = "3--更新了排行榜系统"
-        local notice5 = "4--敬请期待"
+        local notice5 = "4--更新了仓库系统"
+        local notice6 = "5--更新了背包系统"
+        local notice7 = "6--更新了商店系统"
+        local notice8 = "7--更新了一些Bug"
         self.noticeList:Add(self.notice1)
         self.noticeList:Add(self.notice2)
         self.noticeList:Add(self.notice3)
         self.noticeList:Add(self.notice4)
         self.noticeList:Add(notice5)
+        self.noticeList:Add(notice6)
+        self.noticeList:Add(notice7)
+        self.noticeList:Add(notice8)
         for i = 0, self.noticeList.Count - 1, 1 do
             self.noticeTxt.text = self.noticeTxt.text..self.noticeList[i]..'\n'
         end

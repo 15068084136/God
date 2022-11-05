@@ -154,6 +154,15 @@ public class NetService : MonoBehaviour
             case Command.rspFBFightEnd:
                 BattleSys.instance.RspFBFightEnd(msg);
                 break;
+            case Command.rspBuyItem:
+                InventorySys.instance.RspBuyItem(msg);
+                break;
+            case Command.rspSellItem:
+                InventorySys.instance.RspSellItem(msg);
+                break;
+            case Command.rspRank:
+                MainCitySys.instance.RspRank(msg);
+                break;
             default:
                 break;
         }

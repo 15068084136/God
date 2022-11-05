@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PEProtocal;
+using UnityEngine.SceneManagement;
 
 public class GameRoot : MonoBehaviour
 {
@@ -54,6 +55,8 @@ public class GameRoot : MonoBehaviour
     fuBenSys.InitSys();
     BattleSys battleSys = GetComponent<BattleSys>();
     battleSys.InitSys();
+    InventorySys inventorySys = GetComponent<InventorySys>();
+    inventorySys.InitSys();
 
     dynamicWin.SetWinState();
     // 进入登入场景并加载相应UI
@@ -130,6 +133,14 @@ public class GameRoot : MonoBehaviour
         playerData.exp = data.exp;
         playerData.critical = data.crystal;
         playerData.fuBen = data.fuben;
+    }
+
+    public void SetPlayerDataByBuyItem(RspBuyItem data){
+        playerData.coin = data.coin;
+    }
+
+    public void SetPlayerDataBySellItem(RspSellItem data){
+        playerData.coin = data.coin;
     }
     #endregion
 }

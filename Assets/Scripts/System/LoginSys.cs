@@ -48,6 +48,8 @@ public class LoginSys : SystemRoot
 
         // 关闭登录界面
         loginWin.SetWinState(false);
+
+        
     }
 
     public void RspRename(GameMsg msg){
